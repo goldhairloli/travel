@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>日本の主要自動車メーカーの地域別販売台数比率 (2024年3月期)</title>
+  <style>
+    body {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1 {
+      color: #1a3c6e;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    h2 {
+      color: #2c5aa0;
+      margin-top: 30px;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 10px;
+    }
+    .chart-container {
+      width: 100%;
+      height: 400px;
+      margin: 40px 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 30px 0;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
+    th {
+      background-color: #f5f5f5;
+    }
+    .manufacturer {
+      font-weight: bold;
+      text-align: left;
+    }
+    .footer {
+      margin-top: 40px;
+      font-size: 0.9em;
+      color: #666;
+      border-top: 1px solid #ddd;
+      padding-top: 15px;
+    }
+    .chart-bar {
+      display: flex;
+      height: 35px;
+      width: 100%;
+      margin: 8px 0;
+    }
+    .bar-label {
+      width: 80px;
+      font-weight: bold;
+      text-align: right;
+      padding-right: 15px;
+      line-height: 35px;
+    }
+    .bar-container {
+      flex-grow: 1;
+      display: flex;
+      position: relative;
+    }
+    .bar-segment {
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-size: 12px;
+    }
+    .legend {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      margin: 0 15px;
+    }
+    .legend-color {
+      width: 20px;
+      height: 20px;
+      margin-right: 5px;
+    }
+    .summary {
+      background-color: #f9f9f9;
+      padding: 15px;
+      border-radius: 5px;
+      margin: 20px 0;
+    }
+    .summary h3 {
+      margin-top: 0;
+      color: #1a3c6e;
+    }
+    .analysis-item {
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>日本の主要自動車メーカーの地域別販売台数比率 (2024年3月期)</h1>
+  
+  <div class="summary">
+    <p>日本の主要自動車メーカー6社の2024年3月期の決算資料に基づく地域別販売台数比率を分析したレポートです。各社によって地域区分が若干異なる場合があるため、その点を考慮してご覧ください。</p>
+  </div>
+
+  <h2>販売台数比率データ</h2>
+  
+  <table>
+    <thead>
+      <tr>
+        <th>メーカー</th>
+        <th>日本</th>
+        <th>北米</th>
+        <th>欧州</th>
+        <th>アジア</th>
+        <th>中国</th>
+        <th>その他</th>
+        <th>総販売台数</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="manufacturer">トヨタ</td>
+        <td>17.7%</td>
+        <td>25.4%</td>
+        <td>10.7%</td>
+        <td>30.2%</td>
+        <td>-</td>
+        <td>15.9%</td>
+        <td>約1,109万台</td>
+      </tr>
+      <tr>
+        <td class="manufacturer">ホンダ</td>
+        <td>11.1%</td>
+        <td>37.0%</td>
+        <td>2.2%</td>
+        <td>40.5%</td>
+        <td>-</td>
+        <td>9.2%</td>
+        <td>約369万台</td>
+      </tr>
+      <tr>
+        <td class="manufacturer">日産</td>
+        <td>14.0%</td>
+        <td>35.7%</td>
+        <td>9.8%</td>
+        <td>-</td>
+        <td>23.1%</td>
+        <td>17.5%</td>
+        <td>約344万台</td>
+      </tr>
+      <tr>
+        <td class="manufacturer">スズキ</td>
+        <td>20.1%</td>
+        <td>-</td>
+        <td>5.8%</td>
+        <td>64.8%</td>
+        <td>-</td>
+        <td>9.2%</td>
+        <td>約323万台</td>
+      </tr>
+      <tr>
+        <td class="manufacturer">マツダ</td>
+        <td>13.5%</td>
+        <td>41.4%</td>
+        <td>14.5%</td>
+        <td>-</td>
+        <td>5.6%</td>
+        <td>24.9%</td>
+        <td>約124万台</td>
+      </tr>
+      <tr>
+        <td class="manufacturer">SUBARU</td>
+        <td>10.9%</td>
+        <td>77.8%</td>
+        <td>2.5%</td>
+        <td>2.7%</td>
+        <td>1.0%</td>
+        <td>5.2%</td>
+        <td>約98万台</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>地域別販売台数比率（グラフ表現）</h2>
+  
+  <div class="legend">
+    <div class="legend-item">
+      <div class="legend-color" style="background-color: #FF6384;"></div>
+      <span>日本</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-color" style="background-color: #36A2EB;"></div>
+      <span>北米</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-color" style="background-color: #FFCE56;"></div>
+      <span>欧州</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-color" style="background-color: #4BC0C0;"></div>
+      <span>アジア</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-color" style="background-color: #9966FF;"></div>
+      <span>中国</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-color" style="background-color: #FF9F40;"></div>
+      <span>その他</span>
+    </div>
+  </div>
+  
+  <div class="chart-container">
+    <!-- トヨタ -->
+    <div class="chart-bar">
+      <div class="bar-label">トヨタ</div>
+      <div class="bar-container">
+        <div class="bar-segment" style="width: 17.7%; background-color: #FF6384;">17.7%</div>
+        <div class="bar-segment" style="width: 25.4%; background-color: #36A2EB;">25.4%</div>
+        <div class="bar-segment" style="width: 10.7%; background-color: #FFCE56;">10.7%</div>
+        <div class="bar-segment" style="width: 30.2%; background-color: #4BC0C0;">30.2%</div>
+        <div class="bar-segment" style="width: 15.9%; background-color: #FF9F40;">15.9%</div>
+      </div>
+    </div>
+    
+    <!-- ホンダ -->
+    <div class="chart-bar">
+      <div class="bar-label">ホンダ</div>
+      <div class="bar-container">
+        <div class="bar-segment" style="width: 11.1%; background-color: #FF6384;">11.1%</div>
+        <div class="bar-segment" style="width: 37.0%; background-color: #36A2EB;">37.0%</div>
+        <div class="bar-segment" style="width: 2.2%; background-color: #FFCE56;">2.2%</div>
+        <div class="bar-segment" style="width: 40.5%; background-color: #4BC0C0;">40.5%</div>
+        <div class="bar-segment" style="width: 9.2%; background-color: #FF9F40;">9.2%</div>
+      </div>
+    </div>
+    
+    <!-- 日産 -->
+    <div class="chart-bar">
+      <div class="bar-label">日産</div>
+      <div class="bar-container">
+        <div class="bar-segment" style="width: 14.0%; background-color: #FF6384;">14.0%</div>
+        <div class="bar-segment" style="width: 35.7%; background-color: #36A2EB;">35.7%</div>
+        <div class="bar-segment" style="width: 9.8%; background-color: #FFCE56;">9.8%</div>
+        <div class="bar-segment" style="width: 23.1%; background-color: #9966FF;">23.1%</div>
+        <div class="bar-segment" style="width: 17.5%; background-color: #FF9F40;">17.5%</div>
+      </div>
+    </div>
+    
+    <!-- スズキ -->
+    <div class="chart-bar">
+      <div class="bar-label">スズキ</div>
+      <div class="bar-container">
+        <div class="bar-segment" style="width: 20.1%; background-color: #FF6384;">20.1%</div>
+        <div class="bar-segment" style="width: 5.8%; background-color: #FFCE56;">5.8%</div>
+        <div class="bar-segment" style="width: 64.8%; background-color: #4BC0C0;">64.8%</div>
+        <div class="bar-segment" style="width: 9.2%; background-color: #FF9F40;">9.2%</div>
+      </div>
+    </div>
+    
+    <!-- マツダ -->
+    <div class="chart-bar">
+      <div class="bar-label">マツダ</div>
+      <div class="bar-container">
+        <div class="bar-segment" style="width: 13.5%; background-color: #FF6384;">13.5%</div>
+        <div class="bar-segment" style="width: 41.4%; background-color: #36A2EB;">41.4%</div>
+        <div class="bar-segment" style="width: 14.5%; background-color: #FFCE56;">14.5%</div>
+        <div class="bar-segment" style="width: 5.6%; background-color: #9966FF;">5.6%</div>
+        <div class="bar-segment" style="width: 24.9%; background-color: #FF9F40;">24.9%</div>
+      </div>
+    </div>
+    
+    <!-- SUBARU -->
+    <div class="chart-bar">
+      <div class="bar-label">SUBARU</div>
+      <div class="bar-container">
+        <div class="bar-segment" style="width: 10.9%; background-color: #FF6384;">10.9%</div>
+        <div class="bar-segment" style="width: 77.8%; background-color: #36A2EB;">77.8%</div>
+        <div class="bar-segment" style="width: 2.5%; background-color: #FFCE56;">2.5%</div>
+        <div class="bar-segment" style="width: 2.7%; background-color: #4BC0C0;">2.7%</div>
+        <div class="bar-segment" style="width: 1.0%; background-color: #9966FF;">1.0%</div>
+        <div class="bar-segment" style="width: 5.2%; background-color: #FF9F40;">5.2%</div>
+      </div>
+    </div>
+  </div>
+  
+  <h2>各メーカーの特徴分析</h2>
+  
+  <div class="analysis">
+    <div class="analysis-item">
+      <h3>トヨタ</h3>
+      <p>グローバルにバランスの取れた販売構成が特徴で、アジア（30.2%）と北米（25.4%）が主要市場となっています。日本国内（17.7%）を含め、どの地域にも一定の販売基盤を持っています。グループ全体（ダイハツ・日野含む）で年間約1,109万台という圧倒的な販売規模を誇ります。</p>
+    </div>
+    
+    <div class="analysis-item">
+      <h3>ホンダ</h3>
+      <p>アジア（40.5%）と北米（37.0%）の二大市場で全体の約8割を占めており、この2地域への依存度が高いのが特徴です。特に欧州市場での存在感が相対的に小さく（2.2%）、日本国内の比率も比較的低い（11.1%）です。四輪事業で年間約369万台の販売規模です。</p>
+    </div>
+    
+    <div class="analysis-item">
+      <h3>日産</h3>
+      <p>北米（35.7%）と中国（23.1%）が主要市場で、この2地域だけで約6割を占めています。中国市場の重要性が高いのが特徴的です。日本国内は14.0%で、年間約344万台の販売規模を持っています。</p>
+    </div>
+    
+    <div class="analysis-item">
+      <h3>スズキ</h3>
+      <p>アジア市場（特にインド）への依存度が極めて高く（64.8%）、他メーカーと比較して最も地域集中度が高い特徴があります。日本市場の比率も相対的に高く（20.1%）、北米市場での存在感がほとんどないのが特徴です。四輪車で年間約323万台の販売規模です。</p>
+    </div>
+    
+    <div class="analysis-item">
+      <h3>マツダ</h3>
+      <p>北米市場の比率が最も高く（41.4%）、次いでその他地域（24.9%）となっています。欧州市場での比率が他社と比べて高い（14.5%）のも特徴です。年間約124万台の販売規模で、他の大手メーカーと比べるとやや小規模です。</p>
+    </div>
+    
+    <div class="analysis-item">
+      <h3>SUBARU</h3>
+      <p>北米市場（特に米国）への依存度が極めて高く（77.8%）、全メーカーの中で最も単一地域への依存度が高いのが特徴です。日本（10.9%）以外の市場での存在感は限定的で、年間約98万台とメーカーの中では最も規模が小さいです。</p>
+    </div>
+  </div>
+  
+  <div class="footer">
+    <p><strong>データに関する注記：</strong></p>
+    <ul>
+      <li>出典：各社決算資料（2024年3月期）</li>
+      <li>地域区分は各社の発表資料に基づいているため、完全に統一されていない（例：日産、マツダの「中国」の扱い、スズキの「アジア」の範囲など）</li>
+      <li>トヨタはグループ全体の連結小売台数、他社は各ブランドまたは四輪事業の販売台数</li>
+      <li>端数処理の関係で合計が100%にならない場合がある</li>
+    </ul>
+    <p>作成日：2025年4月14日</p>
+  </div>
+</body>
+</html>
