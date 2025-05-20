@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>米国企業 時価総額トップ6 詳細データ (全指標グラフ・Y軸改善)</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px 10px;
+            text-align: left;
+            vertical-align: top;
+        }
+        th {
+            background-color: #f0f0f0;
+            font-weight: bold;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+        h2 { /* 企業名タイトル */
+            margin-top: 40px;
+            margin-bottom: 15px;
+            color: #444;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 5px;
+        }
+        h3 { /* グラフタイトル用 */
+            text-align: center;
+            margin-top: 50px;
+            margin-bottom: 10px;
+            color: #555;
+        }
+        .notes {
+            margin-bottom: 30px;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+        .notes ul {
+            padding-left: 20px;
+            margin: 0;
+        }
+        .notes li {
+            margin-bottom: 5px;
+        }
+        .na-value {
+            color: #999;
+        }
+        .chart-container {
+            width: 90%;
+            margin: 20px auto 50px auto;
+            padding: 10px;
+            border: 1px solid #eee;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>米国企業 時価総額トップ6 詳細データ (全指標グラフ・Y軸改善)</h1>
+
+    <div class="notes">
+        <p><strong>データに関する注意点:</strong></p>
+        <ul>
+            <li><strong>株価:</strong> 調整後終値。</li>
+            <li><strong>時価総額ランキング:</strong> 目安。グラフは対数スケールでY軸反転（1位が上）。</li>
+            <li><strong>日付:</strong> 各年5月末頃。2024年は5月24日時点。</li>
+            <li><strong>PBR, PER, ROE, ランキング:</strong>
+                <ul>
+                    <li>入手可能な情報に基づく目安。範囲指定のデータは平均値をグラフに反映。</li>
+                    <li><span class="na-value">N/A</span> や解釈不能なデータはグラフ上で線が途切れます。</li>
+                </ul>
+            </li>
+            <li>市場変動により常にデータは変動します。</li>
+        </ul>
+    </div>
+
+    <!-- 1. Microsoft -->
+    <h2>1. マイクロソフト (Microsoft) - MSFT</h2>
+    <table>
+        <thead>
+            <tr><th>調査時点</th><th>時価総額ランキング (米国企業内、目安)</th><th>調整後株価 (USD)</th><th>過去5年間の株価上昇率</th><th>PBR (目安)</th><th>PER (目安)</th><th>ROE (TTM, 目安)</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>1994年5月末頃</td><td>トップ10圏外 (20位～30位程度と推定)</td><td>0.08</td><td>-</td><td class="na-value">N/A</td><td class="na-value">N/A</td><td class="na-value">N/A</td></tr>
+            <tr><td>1999年5月末頃</td><td>1位</td><td>1.33</td><td>+1491%</td><td>20-30</td><td>70-80</td><td>25-35%</td></tr>
+            <tr><td>2004年5月末頃</td><td>3位前後</td><td>8.96</td><td>+572%</td><td>4-5</td><td>20-25</td><td>15-20%</td></tr>
+            <tr><td>2009年5月末頃</td><td>3位前後</td><td>16.22</td><td>+81%</td><td>3.5</td><td>12</td><td>30%</td></tr>
+            <tr><td>2014年5月末頃</td><td>4位前後</td><td>34.43</td><td>+112%</td><td>4.0</td><td>15</td><td>25%</td></tr>
+            <tr><td>2019年5月末頃</td><td>1位または2位</td><td>125.52</td><td>+265%</td><td>9.8</td><td>27</td><td>40%</td></tr>
+            <tr><td>2024年5月24日</td><td>1位</td><td>427.25</td><td>+240%</td><td>12.6</td><td>36.6</td><td>38.5%</td></tr>
+        </tbody>
+    </table>
+
+    <!-- 2. Apple -->
+    <h2>2. アップル (Apple) - AAPL</h2>
+    <table>
+      <thead>
+        <tr><th>調査時点</th><th>時価総額ランキング</th><th>調整後株価 (USD)</th><th>過去5年株価上昇率</th><th>PBR (目安)</th><th>PER (目安)</th><th>ROE (TTM, 目安)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1994年5月末頃</td><td>トップ50圏外 (比較的下位)</td><td>0.20</td><td>-</td><td class="na-value">N/A</td><td class="na-value">N/A (赤字時期も)</td><td class="na-value">N/A (赤字時期も)</td></tr>
+        <tr><td>1999年5月末頃</td><td>トップ50圏外 (一時的な低迷期)</td><td>0.28</td><td>+40%</td><td>2-3</td><td class="na-value">N/A (収益不安定)</td><td class="na-value">N/A (収益不安定)</td></tr>
+        <tr><td>2004年5月末頃</td><td>トップ50圏外 (iPod発売後だが本格的な復活前)</td><td>0.88</td><td>+214%</td><td>3-4</td><td>30-40</td><td>5-10%</td></tr>
+        <tr><td>2009年5月末頃</td><td>トップ10圏内 (10位前後、iPhone発売後)</td><td>4.55</td><td>+417%</td><td>4.5</td><td>20-25</td><td>20-25%</td></tr>
+        <tr><td>2014年5月末頃</td><td>1位または2位</td><td>21.13</td><td>+364%</td><td>5.0</td><td>14-15</td><td>30-35%</td></tr>
+        <tr><td>2019年5月末頃</td><td>3位または4位</td><td>43.74</td><td>+107%</td><td>9.5</td><td>16-17</td><td>50-55%</td></tr>
+        <tr><td>2024年5月24日</td><td>2位</td><td>189.98</td><td>+334%</td><td>38.1</td><td>29.5</td><td>147%</td></tr>
+      </tbody>
+    </table>
+
+    <!-- 3. NVIDIA -->
+    <h2>3. エヌビディア (NVIDIA) - NVDA</h2>
+    <table>
+      <thead>
+        <tr><th>調査時点</th><th>時価総額ランキング</th><th>調整後株価 (USD)</th><th>過去5年株価上昇率</th><th>PBR (目安)</th><th>PER (目安)</th><th>ROE (TTM, 目安)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1994年5月末頃</td><td>未上場</td><td>-</td><td>-</td><td class="na-value">N/A</td><td class="na-value">N/A</td><td class="na-value">N/A</td></tr>
+        <tr><td>1999年5月末頃</td><td>トップ500圏外 (IPO: 1999年1月)</td><td>0.31</td><td>- (上場後約4ヶ月)</td><td class="na-value">N/A</td><td class="na-value">N/A (赤字の可能性)</td><td class="na-value">N/A (赤字の可能性)</td></tr>
+        <tr><td>2004年5月末頃</td><td>トップ500圏内 (GPUメーカーとして成長)</td><td>1.28</td><td>+313%</td><td>3-4</td><td>25-35</td><td>10-15%</td></tr>
+        <tr><td>2009年5月末頃</td><td>トップ200～300位程度</td><td>2.55</td><td>+99%</td><td>1.5-2</td><td>20-30 (収益変動大)</td><td>5-10%</td></tr>
+        <tr><td>2014年5月末頃</td><td>トップ150～200位程度</td><td>4.74</td><td>+86%</td><td>2.5-3</td><td>15-20</td><td>15-20%</td></tr>
+        <tr><td>2019年5月末頃</td><td>トップ50～70位程度</td><td>33.81</td><td>+613%</td><td>8-9</td><td>30-35</td><td>25-30%</td></tr>
+        <tr><td>2024年5月24日</td><td>3位</td><td>1064.69</td><td>+3049%</td><td>51.9</td><td>76.6</td><td>70.7%</td></tr>
+      </tbody>
+    </table>
+
+    <!-- 4. Alphabet / Google -->
+    <h2>4. アルファベット (Alphabet / Google) - GOOGL</h2>
+    <table>
+      <thead>
+        <tr><th>調査時点</th><th>時価総額ランキング</th><th>調整後株価 (USD)</th><th>過去5年株価上昇率</th><th>PBR (目安)</th><th>PER (目安)</th><th>ROE (TTM, 目安)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1994年5月末頃</td><td>未設立</td><td>-</td><td>-</td><td class="na-value">N/A</td><td class="na-value">N/A</td><td class="na-value">N/A</td></tr>
+        <tr><td>1999年5月末頃</td><td>未上場 (設立: 1998年)</td><td>-</td><td>-</td><td class="na-value">N/A</td><td class="na-value">N/A</td><td class="na-value">N/A</td></tr>
+        <tr><td>2004年8月末頃※</td><td>トップ50圏内 (IPO: 2004年8月)</td><td>2.65 (※上場月)</td><td>- (上場直後)</td><td class="na-value">N/A (情報限定的)</td><td class="na-value">N/A (情報限定的)</td><td class="na-value">N/A (情報限定的)</td></tr>
+        <tr><td>2009年5月末頃</td><td>トップ10圏内 (10位前後)</td><td>9.96</td><td>+276% (対2004年8月末)</td><td>4-5</td><td>20-25</td><td>15-20%</td></tr>
+        <tr><td>2014年5月末頃</td><td>3位または4位</td><td>27.21</td><td>+173%</td><td>3.5-4</td><td>25-30</td><td>15%</td></tr>
+        <tr><td>2019年5月末頃</td><td>3位または4位</td><td>55.67</td><td>+105%</td><td>4.5-5</td><td>25-27</td><td>18-20%</td></tr>
+        <tr><td>2024年5月24日</td><td>4位</td><td>173.50</td><td>+212%</td><td>7.1</td><td>26.8</td><td>29.8%</td></tr>
+      </tbody>
+    </table>
+
+    <!-- 5. Amazon -->
+    <h2>5. アマゾン (Amazon) - AMZN</h2>
+    <table>
+      <thead>
+        <tr><th>調査時点</th><th>時価総額ランキング</th><th>調整後株価 (USD)</th><th>過去5年株価上昇率</th><th>PBR (目安)</th><th>PER (目安)</th><th>ROE (TTM, 目安)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1994年5月末頃</td><td>未上場 (設立: 1994年7月)</td><td>-</td><td>-</td><td class="na-value">N/A</td><td class="na-value">N/A</td><td class="na-value">N/A</td></tr>
+        <tr><td>1999年5月末頃</td><td>トップ50～100位程度 (IPO: 1997年5月)</td><td>2.89</td><td>- (上場後約2年)</td><td>30-50</td><td class="na-value">N/A (赤字または微益)</td><td class="na-value">N/A (赤字または微益)</td></tr>
+        <tr><td>2004年5月末頃</td><td>トップ100～150位程度</td><td>2.37</td><td>-18%</td><td>6-8</td><td>60-80 (利益水準低い)</td><td>10-15%</td></tr>
+        <tr><td>2009年5月末頃</td><td>トップ50～70位程度</td><td>3.98</td><td>+68%</td><td>7-9</td><td>50-70 (利益水準低い)</td><td>10-15%</td></tr>
+        <tr><td>2014年5月末頃</td><td>トップ15～20位程度</td><td>15.63</td><td>+293%</td><td>13-15</td><td class="na-value">N/A (投資先行で赤字の時期も)</td><td class="na-value">N/A (投資先行で赤字の時期も)</td></tr>
+        <tr><td>2019年5月末頃</td><td>トップ5圏内</td><td>90.85</td><td>+481%</td><td>18-20</td><td>70-80</td><td>20-25%</td></tr>
+        <tr><td>2024年5月24日</td><td>5位</td><td>180.75</td><td>+99%</td><td>8.2</td><td>51.2</td><td>18.1%</td></tr>
+      </tbody>
+    </table>
+
+    <!-- 6. Meta Platforms / Facebook -->
+    <h2>6. メタ・プラットフォームズ (Meta Platforms / Facebook) - META</h2>
+    <table>
+      <thead>
+        <tr><th>調査時点</th><th>時価総額ランキング</th><th>調整後株価 (USD)</th><th>過去5年株価上昇率</th><th>PBR (目安)</th><th>PER (目安)</th><th>ROE (TTM, 目安)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1994年5月末頃</td><td>未設立</td><td>-</td><td>-</td><td class="na-value">N/A</td><td class="na-value">N/A</td><td class="na-value">N/A</td></tr>
+        <tr><td>1999年5月末頃</td><td>未設立</td><td>-</td><td>-</td><td class="na-value">N/A</td><td class="na-value">N/A</td><td class="na-value">N/A</td></tr>
+        <tr><td>2004年5月末頃</td><td>未上場 (設立: 2004年2月)</td><td>-</td><td>-</td><td class="na-value">N/A</td><td class="na-value">N/A</td><td class="na-value">N/A</td></tr>
+        <tr><td>2009年5月末頃</td><td>未上場 (プライベート市場で評価額上昇)</td><td>-</td><td>-</td><td class="na-value">N/A</td><td class="na-value">N/A</td><td class="na-value">N/A</td></tr>
+        <tr><td>2014年5月末頃</td><td>トップ15～20位程度 (IPO: 2012年5月)</td><td>63.40</td><td>- (上場後2年)</td><td>7-8</td><td>30-35 (成長期待)</td><td>10-15%</td></tr>
+        <tr><td>2019年5月末頃</td><td>トップ5～7位程度</td><td>180.19</td><td>+184%</td><td>5-6</td><td>20-25 (一時スキャンダル影響)</td><td>20-25%</td></tr>
+        <tr><td>2024年5月24日</td><td>6位</td><td>466.87</td><td>+159%</td><td>7.6</td><td>24.4</td><td>33.4%</td></tr>
+      </tbody>
+    </table>
+
+    <!-- グラフセクション -->
+    <h3>調整後株価 推移 (Y軸: 対数スケール)</h3>
+    <div class="chart-container"><canvas id="stockPriceChart"></canvas></div>
+    <h3>時価総額ランキング 推移 (Y軸: 対数・反転, 低いほど上位)</h3>
+    <div class="chart-container"><canvas id="marketCapRankChart"></canvas></div>
+    <h3>過去5年間の株価上昇率 推移 (%)</h3>
+    <div class="chart-container"><canvas id="stockGrowthRateChart"></canvas></div>
+    <h3>PER (株価収益率) 推移 (目安)</h3>
+    <div class="chart-container"><canvas id="perChart"></canvas></div>
+    <h3>PBR (株価純資産倍率) 推移 (目安)</h3>
+    <div class="chart-container"><canvas id="pbrChart"></canvas></div>
+    <h3>ROE (自己資本利益率, TTM) 推移 (目安, %)</h3>
+    <div class="chart-container"><canvas id="roeChart"></canvas></div>
+
+    <script>
+        const labels = ['1994', '1999', '2004', '2009', '2014', '2019', '2024'];
+        const companyColors = {
+            microsoft: 'rgba(0, 123, 255, 1)',   apple: 'rgba(108, 117, 125, 1)',
+            nvidia: 'rgba(40, 167, 69, 1)',      alphabet: 'rgba(220, 53, 69, 1)',
+            amazon: 'rgba(255, 193, 7, 1)',      meta: 'rgba(102, 16, 242, 1)'
+        };
+        const companyNames = {
+            microsoft: 'Microsoft', apple: 'Apple', nvidia: 'NVIDIA',
+            alphabet: 'Alphabet', amazon: 'Amazon', meta: 'Meta'
+        };
+
+        // --- データパース関数 (前回と同じ) ---
+        function parseRank(valueStr) {
+            if (valueStr === null || typeof valueStr === 'undefined') return null;
+            let s = String(valueStr).trim().toLowerCase();
+            if (s === 'n/a' || s.includes('圏外') || s.includes('(') || s === '未上場' || s === '未設立' || s === '-') return null;
+            let orMatch = s.match(/(\d+)\s*位\s*または\s*(\d+)\s*位/);
+            if (orMatch) return (parseInt(orMatch[1],10)+parseInt(orMatch[2],10))/2;
+            let rangeMatch = s.match(/(?:トップ)?\s*(\d+)\s*(?:～|-)\s*(\d+)\s*位?/);
+            if (rangeMatch) return (parseInt(rangeMatch[1],10)+parseInt(rangeMatch[2],10))/2;
+            let approxMatch = s.match(/(\d+)\s*位前後/);
+            if (approxMatch) return parseInt(approxMatch[1],10);
+            let simpleRankMatch = s.match(/(?:トップ)?\s*(\d+)\s*位/);
+            if (simpleRankMatch) return parseInt(simpleRankMatch[1],10);
+            let withinMatch = s.match(/トップ\s*(\d+)\s*圏内/);
+            if (withinMatch) return parseInt(withinMatch[1],10); // "トップ10圏内" は10と解釈
+            const num = parseInt(s.replace(/位/g, ''), 10);
+            if (!isNaN(num) && String(num) === s.replace(/位/g, '')) return num;
+            return null;
+        }
+        function parseMetric(valueStr) {
+            if (valueStr === null || typeof valueStr === 'undefined') return null;
+            let s = String(valueStr).trim();
+            if (s.toLowerCase() === 'n/a' || s.toLowerCase().includes('赤字') || s.includes('(') || s === '-' || s.includes('前後') || s.includes('圏外') || s.includes('上場後約') || s.includes('上場直後') || s.includes('対2004年8月末')) {
+                return null;
+            }
+            let originalPercent = s.endsWith('%');
+            if (originalPercent) s = s.slice(0, -1).trim();
+            const rangeParts = s.split('-');
+            if (rangeParts.length === 2) {
+                const num1 = parseFloat(rangeParts[0].trim());
+                const num2 = parseFloat(rangeParts[1].trim());
+                if (!isNaN(num1) && !isNaN(num2)) return (num1 + num2) / 2;
+            }
+            s = s.replace('+', '');
+            const num = parseFloat(s);
+            return isNaN(num) ? null : num;
+        }
+        // 調整後株価は元々数値なので、特別なパース関数は不要 (直接rawDataから取得)
+        function parseStockPrice(valueStr) {
+            if (valueStr === null || typeof valueStr === 'undefined' || valueStr === '-') return null;
+            return parseFloat(String(valueStr));
+        }
+
+
+        // --- 全企業のデータ (HTMLの表と一致させる) ---
+        const rawData = {
+            microsoft: {
+                rank:   ['トップ10圏外 (20位～30位程度と推定)', '1位', '3位前後', '3位前後', '4位前後', '1位または2位', '1位'],
+                price:  [0.08, 1.33, 8.96, 16.22, 34.43, 125.52, 427.25],
+                growth: ['-', '+1491%', '+572%', '+81%', '+112%', '+265%', '+240%'],
+                pbr:    ['N/A', '20-30', '4-5', '3.5', '4.0', '9.8', '12.6'],
+                per:    ['N/A', '70-80', '20-25', '12', '15', '27', '36.6'],
+                roe:    ['N/A', '25-35%', '15-20%', '30%', '25%', '40%', '38.5%']
+            },
+            apple: {
+                rank:   ['トップ50圏外 (比較的下位)', 'トップ50圏外 (一時的な低迷期)', 'トップ50圏外 (iPod発売後だが本格的な復活前)', 'トップ10圏内 (10位前後、iPhone発売後)', '1位または2位', '3位または4位', '2位'],
+                price:  [0.20, 0.28, 0.88, 4.55, 21.13, 43.74, 189.98],
+                growth: ['-', '+40%', '+214%', '+417%', '+364%', '+107%', '+334%'],
+                pbr:    ['N/A', '2-3', '3-4', '4.5', '5.0', '9.5', '38.1'],
+                per:    ['N/A (赤字時期も)', 'N/A (収益不安定)', '30-40', '20-25', '14-15', '16-17', '29.5'],
+                roe:    ['N/A (赤字時期も)', 'N/A (収益不安定)', '5-10%', '20-25%', '30-35%', '50-55%', '147%']
+            },
+            nvidia: {
+                rank:   ['未上場', 'トップ500圏外 (IPO: 1999年1月)', 'トップ500圏内 (GPUメーカーとして成長)', 'トップ200～300位程度', 'トップ150～200位程度', 'トップ50～70位程度', '3位'],
+                price:  ['-', 0.31, 1.28, 2.55, 4.74, 33.81, 1064.69],
+                growth: ['-', '- (上場後約4ヶ月)', '+313%', '+99%', '+86%', '+613%', '+3049%'],
+                pbr:    ['N/A', 'N/A', '3-4', '1.5-2', '2.5-3', '8-9', '51.9'],
+                per:    ['N/A', 'N/A (赤字の可能性)', '25-35', '20-30 (収益変動大)', '15-20', '30-35', '76.6'],
+                roe:    ['N/A', 'N/A (赤字の可能性)', '10-15%', '5-10%', '15-20%', '25-30%', '70.7%']
+            },
+            alphabet: {
+                rank:   ['未設立', '未上場 (設立: 1998年)', 'トップ50圏内 (IPO: 2004年8月)', 'トップ10圏内 (10位前後)', '3位または4位', '3位または4位', '4位'],
+                price:  ['-', '-', '2.65 (※上場月)', 9.96, 27.21, 55.67, 173.50],
+                growth: ['-', '-', '- (上場直後)', '+276% (対2004年8月末)', '+173%', '+105%', '+212%'],
+                pbr:    ['N/A', 'N/A', 'N/A (情報限定的)', '4-5', '3.5-4', '4.5-5', '7.1'],
+                per:    ['N/A', 'N/A', 'N/A (情報限定的)', '20-25', '25-30', '25-27', '26.8'],
+                roe:    ['N/A', 'N/A', 'N/A (情報限定的)', '15-20%', '15%', '18-20%', '29.8%']
+            },
+            amazon:   {
+                rank:   ['未上場 (設立: 1994年7月)', 'トップ50～100位程度 (IPO: 1997年5月)', 'トップ100～150位程度', 'トップ50～70位程度', 'トップ15～20位程度', 'トップ5圏内', '5位'],
+                price:  ['-', '2.89', '2.37', '3.98', '15.63', '90.85', '180.75'],
+                growth: ['-', '- (上場後約2年)', '-18%', '+68%', '+293%', '+481%', '+99%'],
+                pbr:    ['N/A', '30-50', '6-8', '7-9', '13-15', '18-20', '8.2'],
+                per:    ['N/A', 'N/A (赤字または微益)', '60-80 (利益水準低い)', '50-70 (利益水準低い)', 'N/A (投資先行で赤字の時期も)', '70-80', '51.2'],
+                roe:    ['N/A', 'N/A (赤字または微益)', '10-15%', '10-15%', 'N/A (投資先行で赤字の時期も)', '20-25%', '18.1%']
+            },
+            meta:     {
+                rank:   ['未設立', '未設立', '未上場 (設立: 2004年2月)', '未上場 (プライベート市場で評価額上昇)', 'トップ15～20位程度 (IPO: 2012年5月)', 'トップ5～7位程度', '6位'],
+                price:  ['-', '-', '-', '-', '63.40', '180.19', '466.87'],
+                growth: ['-', '-', '-', '-', '- (上場後2年)', '+184%', '+159%'],
+                pbr:    ['N/A', 'N/A', 'N/A', 'N/A', '7-8', '5-6', '7.6'],
+                per:    ['N/A', 'N/A', 'N/A', 'N/A', '30-35 (成長期待)', '20-25 (一時スキャンダル影響)', '24.4'],
+                roe:    ['N/A', 'N/A', 'N/A', 'N/A', '10-15%', '20-25%', '33.4%']
+            }
+        };
+
+
+        function createChart(canvasId, dataKey, yAxisLabel, yAxisOptions = {}, dataParser) {
+            const ctx = document.getElementById(canvasId).getContext('2d');
+            const datasets = Object.keys(companyNames).map(key => ({
+                label: companyNames[key] + ` (${key.toUpperCase()})`, // 凡例にティッカーシンボル追加
+                data: rawData[key][dataKey].map(val => dataParser(val)),
+                borderColor: companyColors[key], tension: 0.1, fill: false, spanGaps: false // nullで線は途切れる
+            }));
+            const defaultYAxis = { display: true, title: { display: true, text: yAxisLabel } };
+            new Chart(ctx, {
+                type: 'line', data: { labels: labels, datasets: datasets },
+                options: {
+                    responsive: true, maintainAspectRatio: true,
+                    plugins: { tooltip: { mode: 'index', intersect: false } },
+                    scales: { x: { display: true, title: { display: true, text: '調査時点 (年)' } }, y: { ...defaultYAxis, ...yAxisOptions } },
+                    interaction: { intersect: false, mode: 'index' }
+                }
+            });
+        }
+
+        // --- 1. 調整後株価グラフ ---
+        createChart('stockPriceChart', 'price', '調整後株価 (USD) - 対数スケール',
+            { type: 'logarithmic', ticks: { callback: function(v) { if (v===1000) return "1K"; if (v===100) return "100"; if (v===10) return "10"; if (v===1) return "1"; if (v===0.1) return "0.1"; return null;}}},
+            parseStockPrice // 株価用のパース関数
+        );
+        // --- 2. 時価総額ランキンググラフ ---
+        createChart('marketCapRankChart', 'rank', 'ランキング (対数・反転, 低いほど上位)',
+            { type: 'logarithmic', reverse: true, min: 1,
+              ticks: {
+                  callback: function(value, index, ticks) {
+                      const logLevels = [1, 2, 3, 5, 10, 20, 30, 50, 100, 200, 300, 500];
+                      if (logLevels.includes(Math.round(value))) return Math.round(value) + '位';
+                      return null;
+                  },
+                  autoSkip: true, maxTicksLimit: 10
+              }
+            }, parseRank);
+        // --- 3. 株価上昇率グラフ ---
+        createChart('stockGrowthRateChart', 'growth', '過去5年間の株価上昇率 (%)', {}, parseMetric);
+        // --- 4. PERグラフ ---
+        createChart('perChart', 'per', 'PER (倍)', {}, parseMetric);
+        // --- 5. PBRグラフ ---
+        createChart('pbrChart', 'pbr', 'PBR (倍)', {}, parseMetric);
+        // --- 6. ROEグラフ ---
+        createChart('roeChart', 'roe', 'ROE (TTM, %)', {}, parseMetric);
+    </script>
+</body>
+</html>
