@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ヘルスケア3社 10年間財務指標推移</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8fafc;
+            color: #334155;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            color: #1e293b;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+        .controls {
+            margin-bottom: 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        label {
+            font-weight: 600;
+            color: #374151;
+        }
+        select {
+            padding: 10px 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 16px;
+            background-color: white;
+            color: #374151;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+        select:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid;
+        }
+        .stat-card.unh {
+            border-left-color: #8b5cf6;
+        }
+        .stat-card.lly {
+            border-left-color: #10b981;
+        }
+        .stat-card.jnj {
+            border-left-color: #f59e0b;
+        }
+        .stat-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        .stat-growth {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+        .chart-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        .chart-title {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #1e293b;
+        }
+        .chart-wrapper {
+            position: relative;
+            height: 400px;
+        }
+        .analysis {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .analysis h2 {
+            color: #1e293b;
+            margin-bottom: 20px;
+        }
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+        }
+        .ranking-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .ranking-item:last-child {
+            border-bottom: none;
+        }
+        .growth-positive {
+            color: #059669;
+            font-weight: 600;
+        }
+        .characteristics {
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+        .characteristics div {
+            margin-bottom: 8px;
+        }
+        .characteristics strong {
+            color: #1e293b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ヘルスケア3社 10年間財務指標推移</h1>
+        
+        <div class="controls">
+            <div class="control-group">
+                <label for="metricSelect">表示する指標:</label>
+                <select id="metricSelect" onchange="updateChart()">
+                    <option value="revenue">売上高 (億ドル)</option>
+                    <option value="operating">営業利益 (億ドル)</option>
+                    <option value="eps">EPS (ドル)</option>
+                    <option value="roe">ROE (%)</option>
+                    <option value="roa">ROA (%)</option>
+                    <option value="dividend">配当 (ドル)</option>
+                    <option value="pbr">PBR (倍)</option>
+                    <option value="per">PER (倍)</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card unh">
+                <div class="stat-title" style="color: #8b5cf6;">UnitedHealth (UNH)</div>
+                <div class="stat-value" id="unhValue">410.1</div>
+                <div class="stat-growth" id="unhGrowth">10年成長率: +161.2%</div>
+            </div>
+            <div class="stat-card lly">
+                <div class="stat-title" style="color: #10b981;">Eli Lilly (LLY)</div>
+                <div class="stat-value" id="llyValue">49.0</div>
+                <div class="stat-growth" id="llyGrowth">10年成長率: +146.2%</div>
+            </div>
+            <div class="stat-card jnj">
+                <div class="stat-title" style="color: #f59e0b;">Johnson & Johnson (JNJ)</div>
+                <div class="stat-value" id="jnjValue">90.2</div>
+                <div class="stat-growth" id="jnjGrowth">10年成長率: +28.7%</div>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <div class="chart-title" id="chartTitle">売上高 (億ドル) - 10年間推移</div>
+            <div class="chart-wrapper">
+                <canvas id="mainChart"></canvas>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <div class="chart-title">2025年予想 - 現在指標比較</div>
+            <div class="chart-wrapper">
+                <canvas id="compareChart"></canvas>
+            </div>
+        </div>
+
+        <div class="analysis">
+            <h2>主要指標分析</h2>
+            <div class="analysis-grid">
+                <div>
+                    <h3>成長性ランキング (10年CAGR)</h3>
+                    <div id="rankingList">
+                        <div class="ranking-item">
+                            <span>1. Eli Lilly (LLY)</span>
+                            <span class="growth-positive" id="llyCAGR">+9.4%</span>
+                        </div>
+                        <div class="ranking-item">
+                            <span>2. UnitedHealth (UNH)</span>
+                            <span class="growth-positive" id="unhCAGR">+10.1%</span>
+                        </div>
+                        <div class="ranking-item">
+                            <span>3. Johnson & Johnson (JNJ)</span>
+                            <span class="growth-positive" id="jnjCAGR">+2.6%</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3>投資特性</h3>
+                    <div class="characteristics">
+                        <div><strong>UnitedHealth:</strong> 安定成長、高ROE、医療保険リーダー</div>
+                        <div><strong>Eli Lilly:</strong> 高成長、革新的医薬品、高バリュエーション</div>
+                        <div><strong>Johnson & Johnson:</strong> 配当重視、安定性、多角化</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 10年間の財務データ
+        const financialData = {
+            years: ['2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025E'],
+            revenue: {
+                UNH: [157.1, 184.8, 201.2, 226.2, 242.2, 257.1, 287.6, 324.2, 371.6, 400.3, 410.1],
+                LLY: [19.9, 21.2, 22.9, 24.6, 22.3, 24.5, 28.3, 28.5, 34.1, 45.0, 49.0],
+                JNJ: [70.1, 71.9, 76.5, 81.6, 82.1, 82.6, 93.8, 94.9, 85.2, 87.9, 90.2]
+            },
+            operating: {
+                UNH: [10.3, 11.8, 13.2, 14.8, 15.9, 17.2, 20.1, 22.8, 24.1, 26.5, 28.2],
+                LLY: [4.8, 5.3, 5.9, 6.8, 5.1, 6.2, 8.1, 8.4, 11.2, 15.8, 17.5],
+                JNJ: [15.1, 16.8, 18.4, 20.1, 19.8, 20.5, 24.3, 25.1, 21.8, 23.2, 24.8]
+            },
+            eps: {
+                UNH: [6.01, 7.25, 8.45, 11.12, 14.84, 16.12, 18.28, 20.12, 23.85, 15.51, 23.89],
+                LLY: [2.45, 2.68, 3.12, 3.94, 2.85, 4.29, 6.15, 6.24, 5.82, 11.05, 13.45],
+                JNJ: [5.48, 6.04, 7.15, 8.32, 8.68, 7.35, 9.85, 10.15, 6.95, 7.23, 8.15]
+            },
+            roe: {
+                UNH: [15.2, 17.5, 19.8, 22.3, 24.1, 23.8, 25.2, 26.1, 25.8, 26.8, 26.8],
+                LLY: [25.3, 27.1, 29.2, 31.5, 25.8, 28.9, 32.5, 33.2, 30.8, 38.5, 40.2],
+                JNJ: [18.7, 19.2, 20.1, 21.8, 22.1, 18.5, 19.8, 20.5, 17.2, 18.1, 19.5]
+            },
+            roa: {
+                UNH: [4.8, 5.2, 5.9, 6.8, 7.5, 7.8, 8.5, 9.2, 9.8, 10.2, 11.8],
+                LLY: [8.9, 9.4, 10.2, 11.1, 8.9, 10.5, 12.8, 13.1, 13.8, 15.2, 16.8],
+                JNJ: [7.2, 7.8, 8.4, 9.2, 9.5, 8.1, 8.9, 9.8, 7.8, 8.5, 9.2]
+            },
+            dividend: {
+                UNH: [3.35, 3.50, 3.65, 3.90, 4.28, 4.68, 5.32, 6.00, 7.20, 8.00, 8.40],
+                LLY: [1.96, 2.04, 2.25, 2.44, 2.58, 2.68, 2.85, 3.04, 3.24, 4.12, 4.48],
+                JNJ: [2.95, 3.15, 3.32, 3.54, 3.76, 4.04, 4.24, 4.44, 4.64, 4.84, 5.04]
+            },
+            pbr: {
+                UNH: [2.1, 2.3, 2.5, 2.8, 3.1, 3.2, 3.5, 3.8, 4.1, 2.1, 2.8],
+                LLY: [6.8, 7.2, 8.1, 9.2, 7.8, 8.5, 10.2, 12.5, 15.2, 25.8, 28.2],
+                JNJ: [2.8, 2.9, 3.1, 3.3, 3.5, 3.2, 3.1, 2.9, 2.8, 2.9, 3.1]
+            },
+            per: {
+                UNH: [18.5, 19.2, 20.1, 21.5, 18.2, 19.8, 22.1, 21.5, 19.2, 19.4, 12.6],
+                LLY: [24.2, 26.8, 28.5, 32.1, 45.2, 38.5, 41.2, 52.8, 68.5, 126.0, 53.1],
+                JNJ: [16.5, 17.1, 17.8, 18.5, 16.9, 21.5, 16.8, 16.2, 22.1, 21.2, 18.8]
+            }
+        };
+
+        let mainChart, compareChart;
+        let currentMetric = 'revenue';
+
+        const metricLabels = {
+            revenue: '売上高 (億ドル)',
+            operating: '営業利益 (億ドル)',
+            eps: 'EPS (ドル)',
+            roe: 'ROE (%)',
+            roa: 'ROA (%)',
+            dividend: '配当 (ドル)',
+            pbr: 'PBR (倍)',
+            per: 'PER (倍)'
+        };
+
+        const colors = {
+            UNH: '#8b5cf6',
+            LLY: '#10b981',
+            JNJ: '#f59e0b'
+        };
+
+        function initCharts() {
+            const ctx1 = document.getElementById('mainChart').getContext('2d');
+            const ctx2 = document.getElementById('compareChart').getContext('2d');
+
+            mainChart = new Chart(ctx1, {
+                type: 'line',
+                data: {
+                    labels: financialData.years,
+                    datasets: [
+                        {
+                            label: 'UnitedHealth',
+                            data: financialData[currentMetric].UNH,
+                            borderColor: colors.UNH,
+                            backgroundColor: colors.UNH + '20',
+                            borderWidth: 3,
+                            pointRadius: 5,
+                            pointHoverRadius: 7,
+                            tension: 0.1
+                        },
+                        {
+                            label: 'Eli Lilly',
+                            data: financialData[currentMetric].LLY,
+                            borderColor: colors.LLY,
+                            backgroundColor: colors.LLY + '20',
+                            borderWidth: 3,
+                            pointRadius: 5,
+                            pointHoverRadius: 7,
+                            tension: 0.1
+                        },
+                        {
+                            label: 'Johnson & Johnson',
+                            data: financialData[currentMetric].JNJ,
+                            borderColor: colors.JNJ,
+                            backgroundColor: colors.JNJ + '20',
+                            borderWidth: 3,
+                            pointRadius: 5,
+                            pointHoverRadius: 7,
+                            tension: 0.1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: '#e5e7eb'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: '#e5e7eb'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                padding: 20,
+                                font: {
+                                    size: 14
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            compareChart = new Chart(ctx2, {
+                type: 'bar',
+                data: {
+                    labels: ['2025年予想'],
+                    datasets: [
+                        {
+                            label: 'UnitedHealth',
+                            data: [financialData[currentMetric].UNH[10]],
+                            backgroundColor: colors.UNH,
+                            borderColor: colors.UNH,
+                            borderWidth: 2
+                        },
+                        {
+                            label: 'Eli Lilly',
+                            data: [financialData[currentMetric].LLY[10]],
+                            backgroundColor: colors.LLY,
+                            borderColor: colors.LLY,
+                            borderWidth: 2
+                        },
+                        {
+                            label: 'Johnson & Johnson',
+                            data: [financialData[currentMetric].JNJ[10]],
+                            backgroundColor: colors.JNJ,
+                            borderColor: colors.JNJ,
+                            borderWidth: 2
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: '#e5e7eb'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: '#e5e7eb'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                padding: 20,
+                                font: {
+                                    size: 14
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateChart() {
+            currentMetric = document.getElementById('metricSelect').value;
+            
+            // チャートタイトル更新
+            document.getElementById('chartTitle').textContent = metricLabels[currentMetric] + ' - 10年間推移';
+            
+            // 統計値更新
+            const currentData = financialData[currentMetric];
+            const firstValues = {
+                UNH: currentData.UNH[0],
+                LLY: currentData.LLY[0],
+                JNJ: currentData.JNJ[0]
+            };
+            const lastValues = {
+                UNH: currentData.UNH[10],
+                LLY: currentData.LLY[10],
+                JNJ: currentData.JNJ[10]
+            };
+            
+            document.getElementById('unhValue').textContent = lastValues.UNH;
+            document.getElementById('llyValue').textContent = lastValues.LLY;
+            document.getElementById('jnjValue').textContent = lastValues.JNJ;
+            
+            const growthUNH = ((lastValues.UNH / firstValues.UNH - 1) * 100).toFixed(1);
+            const growthLLY = ((lastValues.LLY / firstValues.LLY - 1) * 100).toFixed(1);
+            const growthJNJ = ((lastValues.JNJ / firstValues.JNJ - 1) * 100).toFixed(1);
+            
+            document.getElementById('unhGrowth').textContent = `10年成長率: +${growthUNH}%`;
+            document.getElementById('llyGrowth').textContent = `10年成長率: +${growthLLY}%`;
+            document.getElementById('jnjGrowth').textContent = `10年成長率: +${growthJNJ}%`;
+            
+            // CAGR計算
+            const cagrUNH = ((Math.pow(lastValues.UNH / firstValues.UNH, 1/10) - 1) * 100).toFixed(1);
+            const cagrLLY = ((Math.pow(lastValues.LLY / firstValues.LLY, 1/10) - 1) * 100).toFixed(1);
+            const cagrJNJ = ((Math.pow(lastValues.JNJ / firstValues.JNJ, 1/10) - 1) * 100).toFixed(1);
+            
+            document.getElementById('unhCAGR').textContent = `+${cagrUNH}%`;
+            document.getElementById('llyCAGR').textContent = `+${cagrLLY}%`;
+            document.getElementById('jnjCAGR').textContent = `+${cagrJNJ}%`;
+            
+            // チャートデータ更新
+            mainChart.data.datasets[0].data = currentData.UNH;
+            mainChart.data.datasets[1].data = currentData.LLY;
+            mainChart.data.datasets[2].data = currentData.JNJ;
+            mainChart.update();
+            
+            compareChart.data.datasets[0].data = [lastValues.UNH];
+            compareChart.data.datasets[1].data = [lastValues.LLY];
+            compareChart.data.datasets[2].data = [lastValues.JNJ];
+            compareChart.update();
+        }
+
+        // 初期化
+        window.onload = function() {
+            initCharts();
+            updateChart();
+        };
+    </script>
+</body>
+</html>
