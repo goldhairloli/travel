@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube地図アプリ</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+    <style>
+        .leaflet-container { height: 100% !important; width: 100% !important; position: relative !important; z-index: 1 !important; }
+        .map-container { position: relative; height: 100%; width: 100%; }
+        .map-overlay { position: absolute; top: 16px; left: 16px; z-index: 1000; pointer-events: none; }
+        .custom-youtube-icon { background: transparent !important; border: none !important; }
+        .map-container.adding-mode .leaflet-container { cursor: crosshair !important; }
+        .hidden-file-input { display: none; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        const YouTubeMapApp = () => {
+            const [locations, setLocations] = useState([]);
+            const [showModal, setShowModal] = useState(false);
+            const [currentCoords, setCurrentCoords] = useState(null);
+            const [title, setTitle] = useState('');
+            const [url, setUrl] = useState('');
+            const [isAddingMode, setIsAddingMode] = useState(false);
+            const [mapInitialized, setMapInitialized] = useState(false);
+            const [searchQuery, setSearchQuery] = useState('');
+            
+            // ▼▼▼ 追加 ▼▼▼
+            const [isSidebarVisible, setIsSidebarVisible] = useState(true); // サイドバーの表示状態を管理
+            // ▲▲▲ 追加 ▲▲▲
+
+            const mapRef = useRef(null);
+            const mapInstanceRef = useRef(null);
+            const markersRef = useRef([]);
+            const searchMarkerRef = useRef(null);
+            const mapStateRef = useRef({ center: [35.6762, 139.6503], zoom: 2 });
+            const fileInputRef = useRef(null);
+
+            // (ローカルストレージや手動同期のロジックは変更ありません)
+            useEffect(() => { try { const d = localStorage.getItem('youtubeMapLocations'); if(d) setLocations(JSON.parse(d)); } catch(e){} }, []);
+            useEffect(() => { localStorage.setItem('youtubeMapLocations', JSON.stringify(locations)); }, [locations]);
+            const handleExport = () => { if(locations.length===0){alert('データがありません');return;} const d=JSON.stringify(locations,null,2); const b=new Blob([d],{type:"application/json"}); const u=URL.createObjectURL(b); const a=document.createElement('a'); a.href=u; a.download=`map-data-${Date.now()}.json`; a.click(); URL.revokeObjectURL(u); };
+            const triggerImport = () => { fileInputRef.current.click(); };
+            const handleImport = (e) => { const f=e.target.files[0]; if(!f)return; const r=new FileReader(); r.onload=ev=>{ try{ const d=JSON.parse(ev.target.result); if(!Array.isArray(d))throw new Error(); if(confirm('データを上書きしますか？')){setLocations(d);alert('インポート完了');} }catch(err){alert('ファイル読込失敗');} }; r.readAsText(f); e.target.value=null; };
+
+            // ▼▼▼ 追加 ▼▼▼
+            // サイドバーの表示状態が変更されたときに、地図のサイズを再計算する
+            useEffect(() => {
+                // mapInstanceRef.currentが存在することを確認
+                if (mapInstanceRef.current) {
+                    // レイアウトの変更が反映されるのを少し待ってから実行
+                    setTimeout(() => {
+                        if (mapInstanceRef.current) {
+                           mapInstanceRef.current.invalidateSize();
+                        }
+                    }, 200); // 0.2秒待つ
+                }
+            }, [isSidebarVisible]);
+            // ▲▲▲ 追加 ▲▲▲
+
+            // (これ以降の地図初期化、マーカー更新などのロジックも変更ありません)
+            useEffect(() => {
+                if (!mapRef.current || mapInstanceRef.current) return;
+                setTimeout(() => {
+                    mapInstanceRef.current = L.map(mapRef.current).setView(mapStateRef.current.center, mapStateRef.current.zoom);
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap contributors' }).addTo(mapInstanceRef.current);
+                    setTimeout(() => { if(mapInstanceRef.current) { mapInstanceRef.current.invalidateSize(); setMapInitialized(true); }}, 100);
+                }, 100);
+                return () => { if (mapInstanceRef.current) { mapInstanceRef.current.remove(); mapInstanceRef.current = null; } };
+            }, []);
+            useEffect(() => {
+                if (!mapInitialized) return;
+                markersRef.current.forEach(m => m.remove());
+                markersRef.current = [];
+                locations.forEach(loc => {
+                    const videoId = getYouTubeVideoId(loc.youtubeUrl);
+                    if (!videoId) return;
+                    const iconHtml = `<div style="position: relative; width: 120px; height: 90px; border-radius: 8px; overflow: hidden; border: 3px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.5);"><img src="https://img.youtube.com/vi/${videoId}/mqdefault.jpg" style="width:100%;height:100%;object-fit:cover;"/><div style="position:absolute;bottom:0;left:0;right:0;padding:4px;background:rgba(0,0,0,0.6);"><p style="color:white;font-size:12px;font-weight:bold;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-shadow:1px 1px 2px black;">${loc.title}</p></div></div>`;
+                    const customIcon = L.divIcon({ html: iconHtml, className: 'custom-youtube-icon', iconSize: [120, 90], iconAnchor: [60, 90] });
+                    const marker = L.marker([loc.lat, loc.lng], { icon: customIcon }).addTo(mapInstanceRef.current);
+                    const popupContent = `<div style="padding:10px;text-align:center;"><h4>${loc.title}</h4><button onclick="window.open('${loc.youtubeUrl}','_blank')" style="background:#ff0000;color:white;border:0;padding:8px 12px;border-radius:5px;cursor:pointer;margin-right:5px;">再生</button><button onclick="window.deleteLocation(${loc.id})" style="background:#6c757d;color:white;border:0;padding:8px 12px;border-radius:5px;cursor:pointer;">削除</button></div>`;
+                    marker.bindPopup(popupContent);
+                    markersRef.current.push(marker);
+                });
+            }, [locations, mapInitialized]);
+            useEffect(() => { window.deleteLocation = id => { if(confirm('削除しますか？')) setLocations(p => p.filter(l => l.id !== id)); }; return () => { delete window.deleteLocation; }; }, []);
+            const getYouTubeVideoId = (url) => { const m = url.match(/(?:v=|be\/|embed\/)([^?&]+)/); return m ? m[1] : null; };
+            const handleSubmit = () => { if(!currentCoords || !title || !url) return; setLocations(p => [...p, {id:Date.now(), lat:currentCoords.lat, lng:currentCoords.lng, title, youtubeUrl:url}]); closeModal(); };
+            const closeModal = () => { setShowModal(false); setTitle(''); setUrl(''); setIsAddingMode(false); };
+            const deleteLocation = id => { if(confirm('削除しますか？')) setLocations(p => p.filter(l => l.id !== id)); };
+            const openYouTube = url => window.open(url, '_blank');
+            const handleSearch = async () => { if(!searchQuery)return; const res=await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${searchQuery}`); const data=await res.json(); if(data&&data.length>0){mapInstanceRef.current.setView([data[0].lat,data[0].lon],13);}else{alert('場所が見つかりません');} };
+            useEffect(() => { if(!mapInstanceRef.current)return; const h = e => { if(isAddingMode){setCurrentCoords(e.latlng); setShowModal(true); setIsAddingMode(false);} }; mapInstanceRef.current.on('click',h); return()=>{mapInstanceRef.current.off('click',h);}; },[isAddingMode]);
+
+            return React.createElement('div', { className: "h-screen bg-gray-100 flex flex-col" },
+                // ヘッダー
+                React.createElement('header', { className: "bg-white shadow-lg p-4 z-20" },
+                    React.createElement('h1', { className: "text-xl font-bold text-gray-800" }, '🗺️ YouTube地図アプリ'),
+                    
+                    React.createElement('div', { className: "mt-3 flex flex-wrap gap-2 items-center" },
+                        React.createElement('button', { onClick: () => setIsAddingMode(!isAddingMode), className: `px-3 py-2 text-sm rounded-md transition-colors ${isAddingMode ? 'bg-gray-500 text-white' : 'bg-red-500 text-white'}` }, isAddingMode ? '❌ キャンセル' : '📍 リンクを追加'),
+                        React.createElement('button', { onClick: handleExport, className: "px-3 py-2 text-sm rounded-md bg-green-500 text-white" }, '📤 エクスポート'),
+                        React.createElement('button', { onClick: triggerImport, className: "px-3 py-2 text-sm rounded-md bg-purple-500 text-white" }, '📥 インポート'),
+                        React.createElement('input', { type: "file", ref: fileInputRef, className: "hidden-file-input", onChange: handleImport, accept: ".json" }),
+                        
+                        // ▼▼▼ 追加 ▼▼▼
+                        React.createElement('button', { 
+                            onClick: () => setIsSidebarVisible(!isSidebarVisible), 
+                            className: "px-3 py-2 text-sm rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300"
+                        }, isSidebarVisible ? 'サイドバーを隠す →' : '← サイドバーを表示'),
+                        // ▲▲▲ 追加 ▲▲▲
+                    ),
+
+                    React.createElement('div', { className: "mt-3 flex" },
+                        React.createElement('input', { type: "text", value: searchQuery, onChange: e => setSearchQuery(e.target.value), onKeyPress: e => e.key==='Enter' && handleSearch(), className: "flex-grow px-3 py-2 border rounded-l-md", placeholder: "地名で検索" }),
+                        React.createElement('button', { onClick: handleSearch, className: "px-4 py-2 bg-blue-500 text-white rounded-r-md" }, '検索')
+                    )
+                ),
+
+                // メインコンテンツ
+                React.createElement('main', { className: "flex flex-1 overflow-hidden" },
+                    // 地図エリア
+                    React.createElement('div', { className: `flex-1 relative map-container ${isAddingMode ? 'adding-mode' : ''}` },
+                        React.createElement('div', { ref: mapRef, className: 'w-full h-full' })
+                    ),
+
+                    // ▼▼▼ 変更 ▼▼▼
+                    // isSidebarVisibleがtrueの時だけ、サイドバーを描画する
+                    isSidebarVisible && React.createElement('aside', { className: "w-80 bg-white border-l flex flex-col transition-all duration-300" },
+                        React.createElement('div', { className: "p-4 border-b bg-gray-50" },
+                            React.createElement('h2', { className: "text-lg font-semibold" }, '保存されたリンク'),
+                            React.createElement('p', { className: "text-sm text-gray-600" }, `${locations.length}件`)
+                        ),
+                        React.createElement('div', { className: "flex-1 p-4 overflow-y-auto space-y-3" },
+                            locations.length === 0 ? React.createElement('p', { className: "text-gray-500 text-center py-8" }, 'データがありません') :
+                            locations.map(location => React.createElement('div', { key: location.id, className: "bg-gray-100 border rounded-lg p-3" },
+                                React.createElement('p', { className: "font-semibold truncate mb-2" }, location.title),
+                                getYouTubeVideoId(location.youtubeUrl) && React.createElement('img', { src: `https://img.youtube.com/vi/${getYouTubeVideoId(location.youtubeUrl)}/mqdefault.jpg`, className: "w-full h-24 object-cover rounded cursor-pointer mb-2", onClick: () => openYouTube(location.youtubeUrl) }),
+                                React.createElement('div', { className: "flex gap-2" },
+                                    React.createElement('button', { onClick: () => openYouTube(location.youtubeUrl), className: "flex-1 bg-red-500 text-white py-1.5 px-2 text-sm rounded" }, '再生'),
+                                    React.createElement('button', { onClick: () => deleteLocation(location.id), className: "flex-1 bg-gray-500 text-white py-1.5 px-2 text-sm rounded" }, '削除')
+                                )
+                            ))
+                        )
+                    )
+                    // ▲▲▲ 変更 ▲▲▲
+                ),
+                showModal && React.createElement('div', { className: "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" },
+                    React.createElement('div', { className: "bg-white rounded-lg p-6 w-full max-w-sm mx-4" },
+                        React.createElement('h2', { className: "text-lg font-bold mb-4" }, 'リンクを保存'),
+                        React.createElement('input', { type: "text", value: title, onChange: e=>setTitle(e.target.value), className: "w-full p-2 border rounded mb-3", placeholder: "タイトル" }),
+                        React.createElement('input', { type: "url", value: url, onChange: e=>setUrl(e.target.value), className: "w-full p-2 border rounded mb-4", placeholder: "YouTube URL" }),
+                        React.createElement('div', { className: "flex justify-end gap-3" },
+                            React.createElement('button', { onClick: closeModal, className: "px-4 py-2 bg-gray-300 rounded" }, 'キャンセル'),
+                            React.createElement('button', { onClick: handleSubmit, className: "px-4 py-2 bg-red-500 text-white rounded" }, '保存')
+                        )
+                    )
+                )
+            );
+        };
+        ReactDOM.render(React.createElement(YouTubeMapApp), document.getElementById('root'));
+    </script>
+</body>
+</html>
